@@ -7,9 +7,10 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://fir-test-7b098-default-rtdb.asia-southeast1.firebasedatabase.app"
   });
+app.use(express.static('frontend'))
+
 
   var fireData = admin.database();
-
   //連接資料庫，寫了一支API來接friebase裡的pet data
   app.get('/petlist',function (req,res) {
     fireData.ref('petData').once("value",(snapshot)=>{
