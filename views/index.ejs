@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+    </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.9.1/axios.js"></script>
+    <body>
+        <% for (key in petData) {%>
+        <li><%- petData[key].title %></li>
+        <% } %>
+        <label>姓名:</label><input type="text" id="name" name="content" /><br />
+        <label>描述:</label><textarea id="desc" name="desc" rows="4" cols="50"></textarea><br />
+        <label>圖片位址:</label><input type="text" id="imgurl" name="imgurl" size="50" /><br />
+
+        <input type="submit" id="send" value="儲存" />
+    <script>
+        var send = document.querySelector('#send');
+        
+        send.addEventListener('click',function (event) {
+        var name = document.querySelector('#name').value;
+        var desc = document.querySelector('#desc').value;
+        var picturl = document.querySelector('#imgurl').value;
+        console.log(name,desc,imgurl);
+        axios.post('./petaddData', {
+                "title":name,
+                "desc":desc,
+                "picturl":picturl,
+            }).then((response) => {
+                console.log(response.data.result);
+            }).catch((error) => {
+                console.log(error);
+            });
+        // var xhr = new XMLHttpRequest;
+        // xhr.open('post','/petaddData');
+        // xhr.setRequestHeader('Content-type','application/json')
+
+        // var todo = JSON.stringify({
+        //     "title":name,
+        //     "desc":desc,
+        //     "imgurl":imgurl,
+        // })
+        // console.log(todo);
+
+        // xhr.send(todo);
+        // xhr.onload = function(){
+        //     var originData = JSON.parse(xhr.response)
+        //     console.log(originData);
+        // }
+    }, false);
+        
+        
+    </script>
+    </body>
+</html>
