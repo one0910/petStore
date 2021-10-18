@@ -62,12 +62,14 @@ var fireData = admin.database();
     var title = request.body.title
     var desc = request.body.desc
     var picturl = request.body.picturl
+    var createTime = request.body.createTime
     // console.log(request.body);
     var contetnRef = fireData.ref('petData').push();
     contetnRef.set({
        "title":title,
        "desc":desc,
        "picturl":picturl,
+       "createTime":createTime,
     }).then(()=>{
        fireData.ref('petData').once('value',(snapshot)=>{
         // res.header("Access-Control-Allow-Origin","*")
