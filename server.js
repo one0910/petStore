@@ -4,7 +4,9 @@ var app = express();
 var admin = require("firebase-admin");
 var serviceAccount = require("./fir-test-7b098-firebase-adminsdk-6kx4f-b8d8fcfc77.json");
 var bodyParser = require('body-parser');
-const cors = require('cors')
+const { signup } = require("./googleSheet");
+const cors = require('cors');
+const { request, response } = require('express');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -55,6 +57,17 @@ var fireData = admin.database();
     fireData.ref('petData').once("value",(snapshot)=>{
       res.send(snapshot.val())
     })
+  })
+
+
+  //登入API
+  app.post('/userSignup',async(request,response)=>{
+    var userName=request.body.userName;
+    var userPassword=request.body.userPassword;
+    // console.log(request.body);
+    var result = await signup(userName, userPassword)
+    response.send(result)
+    // console.log(result);
   })
 
   //增加petdata API
